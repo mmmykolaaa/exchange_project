@@ -30,6 +30,7 @@ class SignInSignUpScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(height: MediaQuery.of(context).size.height * 0.05), // Зсув на 5% вниз
               Container(
                 alignment: Alignment.topLeft, // Вирівнювання в лівому верхньому кутку
                 child: Container(
@@ -49,6 +50,7 @@ class SignInSignUpScreen extends StatelessWidget {
               ),
               SizedBox(height: 20.0),
               Container(
+                width: double.infinity, // Повне використання доступного простору в ширину
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.0),
                   color: Colors.grey[900],
@@ -66,6 +68,7 @@ class SignInSignUpScreen extends StatelessWidget {
               ),
               SizedBox(height: 20.0),
               Container(
+                width: double.infinity, // Повне використання доступного простору в ширину
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.0),
                   color: Colors.grey[900],
@@ -94,6 +97,7 @@ class SignInSignUpScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
+                  minimumSize: Size(double.infinity, 50), // Розмір кнопки
                 ),
                 child: Text('Sign In'),
               ),
@@ -106,6 +110,7 @@ class SignInSignUpScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
+                  minimumSize: Size(double.infinity, 50), // Розмір кнопки
                 ),
                 child: Text('Sign in with Google'),
               ),
@@ -118,36 +123,51 @@ class SignInSignUpScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
+                  minimumSize: Size(double.infinity, 50), // Розмір кнопки
                 ),
                 child: Text('Sign in with Apple'),
               ),
               SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don't have an account? ",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        // Код для переходу на сторінку реєстрації
-                      },
-                      child: Text(
-                        "Sign Up",
-                        style: TextStyle(
-                          color: Colors.purple,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ),
-                  ],
+              TextButton(
+                onPressed: () {
+                  // Код для відновлення пароля
+                },
+                child: Text(
+                  "Forgot password?",
+                  style: TextStyle(
+                    color: Colors.white,
+                    decoration: TextDecoration.underline,
+                  ),
                 ),
               ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.05), // Зсув на 5% вниз
+              Spacer(), // Простір для розташування тексту внизу
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Don't have an account? ",
+              style: TextStyle(color: Colors.white),
+            ),
+            TextButton(
+              onPressed: () {
+                // Код для переходу на сторінку реєстрації
+              },
+              child: Text(
+                "Sign Up",
+                style: TextStyle(
+                  color: Colors.purple,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
