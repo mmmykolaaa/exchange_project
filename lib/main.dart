@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import './screens/HomeScreen.dart'; // Importing HomeScreen.dart
+import './screens/HomeScreen.dart'; 
+import './screens/JoinUsScreen.dart';
 
 
 void main() {
@@ -23,7 +24,7 @@ class SignInSignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[900], // Темно-сірий фон
+     backgroundColor: Color.fromRGBO(22, 28, 40, 0.004), // Темно-сірий фон
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(20.0),
@@ -52,7 +53,7 @@ class SignInSignUpScreen extends StatelessWidget {
               Container(
                 width: double.infinity, // Повне використання доступного простору в ширину
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30.0),
+                  borderRadius: BorderRadius.circular(15.0),
                   color: Colors.grey[900],
                 ),
                 child: TextField(
@@ -61,7 +62,7 @@ class SignInSignUpScreen extends StatelessWidget {
                     labelText: 'Email',
                     labelStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
                   ),
                 ),
@@ -70,7 +71,7 @@ class SignInSignUpScreen extends StatelessWidget {
               Container(
                 width: double.infinity, // Повне використання доступного простору в ширину
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30.0),
+                  borderRadius: BorderRadius.circular(15.0),
                   color: Colors.grey[900],
                 ),
                 child: TextField(
@@ -80,7 +81,7 @@ class SignInSignUpScreen extends StatelessWidget {
                     labelText: 'Password',
                     labelStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
                   ),
                 ),
@@ -157,8 +158,11 @@ class SignInSignUpScreen extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                // Код для переходу на сторінку реєстрації
-              },
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => JoinUsScreen()),
+                  );
+                },
               child: Text(
                 "Sign Up",
                 style: TextStyle(
