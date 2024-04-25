@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './JoinUsScreen.dart'; // Імпортуємо клас JoinUsScreen
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -16,6 +17,8 @@ class HomeScreen extends StatelessWidget {
             _buildFavoritesBlock(),
             SizedBox(height: 20.0),
             _buildPortfolioBlock(),
+            SizedBox(height: 20.0),
+            _buildJoinUsButton(), // Додаємо кнопку "Join Us"
           ],
         ),
       ),
@@ -95,44 +98,116 @@ Widget _buildActionItem(String action) {
 }
 
 
-  Widget _buildFavoritesBlock() {
+ Widget _buildFavoritesBlock() {
+  return Container(
+    padding: EdgeInsets.symmetric(horizontal: 20.0),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          'Favorites',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        IconButton(
+          icon: Icon(Icons.arrow_forward_ios),
+          color: Colors.white,
+          onPressed: () {
+            // Navigate to favorites screen
+          },
+        ),
+      ],
+    ),
+  );
+}
+
+Widget _buildJoinUsButton(BuildContext context) { // Оновлений метод з параметром контексту
+  return Container(
+    padding: EdgeInsets.symmetric(horizontal: 20.0),
+    alignment: Alignment.center,
+    child: TextButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => JoinUsScreen()),
+        );
+      },
+      child: Text(
+        "Join Us",
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 16.0,
+        ),
+      ),
+      style: TextButton.styleFrom(
+        padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 15.0),
+        backgroundColor: Color.fromRGBO(20, 25, 36, 1), // Задній фон кнопки
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget _buildPortfolioBlock() {
+  return Container(
+    height: 200.0,
+    padding: EdgeInsets.only(left: 20.0),
+    child: ListView(
+      scrollDirection: Axis.horizontal,
+      children: [
+        _buildAssetCard('Ethereum', '\$10,265.016', '+13.32%'),
+        _buildAssetCard('XRP', '\$3,214.04', '+2.04%'),
+        _buildAssetCard('Oleg', '\$2,713.87', '-1.00%'),
+        _buildAssetCard('Kostya', '\$1,000.45', '+0.00%'),
+        _buildAssetCard('Katya', '\$900.07', '-15.45%'),
+        _buildAssetCard('Mykyta', '\$713.59', '-15.56%'),
+        _buildAssetCard('Grygoriyi', '\$2,713.00', '-1.34%'),
+        _buildAssetCard('Danya', '\$1,103.09', '+1.75%'),
+        _buildAssetCard('Kyryl', '\$5,983.34', '+1.33%'),
+        _buildAssetCard('Saveliyi', '\$2,787.54', '-1.88%'),
+        _buildAssetCard('Artem', '\$6,093.56', '-14.65%'),
+        _buildAssetCard('Juan', '\$798.88', '-100.84%'),
+        _buildAssetCard('Dima', '\$9,713.55', '+200.56%'),
+        // Add other cards here
+      ],
+    ),
+  );
+}
+
+
+
+  Widget _buildJoinUsButton(BuildContext context) { // Додали параметр context
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            'Favorites',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          IconButton(
-            icon: Icon(Icons.arrow_forward_ios),
+      alignment: Alignment.center,
+      child: TextButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => JoinUsScreen()),
+          );
+        },
+        child: Text(
+          "Join Us",
+          style: TextStyle(
             color: Colors.white,
-            onPressed: () {
-              // Navigate to favorites screen
-            },
+            fontWeight: FontWeight.bold,
+            fontSize: 16.0,
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPortfolioBlock() {
-    return Container(
-      height: 200.0,
-      padding: EdgeInsets.only(left: 20.0),
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          _buildAssetCard('Ethereum', '\$10,265.016', '+13.32%'),
-          _buildAssetCard('XRP', '\$3,214.04', '+2.04%'),
-          _buildAssetCard('Solana', '\$2,713.57', '-1.75%'),
-          // Add other cards here
-        ],
+        ),
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 15.0),
+          backgroundColor: Color.fromRGBO(20, 25, 36, 1), // Задній фон кнопки
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
       ),
     );
   }
