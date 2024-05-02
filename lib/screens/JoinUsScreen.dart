@@ -4,9 +4,9 @@ class JoinUsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(20,25,36,255), // Зміна кольору бекграунду на темно-сірий
+      backgroundColor: Color.fromRGBO(0, 0, 0, 1), 
       appBar: AppBar(
-        backgroundColor: Colors.black, // Зміна кольору апаратної панелі на чорний
+        backgroundColor: Colors.black, 
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {

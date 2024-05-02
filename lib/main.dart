@@ -24,7 +24,7 @@ class SignInSignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     backgroundColor: Color.fromRGBO(22, 28, 40, 0.004), // Темно-сірий фон
+     backgroundColor: Color.fromRGBO(0, 0, 0, 1), 
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(20.0),
