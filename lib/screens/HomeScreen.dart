@@ -10,13 +10,13 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildHeader(),
+             _buildHeader(),
             SizedBox(height: 20.0),
             _buildActionsBlock(),
             SizedBox(height: 20.0),
             _buildFavoritesBlock(),
             SizedBox(height: 20.0),
-            _buildPortfolioBlock(),
+            _buildAssetsBlock(),
           ],
         ),
       ),
@@ -95,7 +95,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildFavoritesBlock() {
+   Widget _buildFavoritesBlock() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
@@ -121,72 +121,78 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPortfolioBlock() {
+  Widget _buildAssetsBlock() {
     return Container(
-      height: 200.0,
-      padding: EdgeInsets.only(left: 20.0),
-      child: ListView(
-        scrollDirection: Axis.horizontal,
+      padding: EdgeInsets.symmetric(horizontal: 20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 20.0),
+          Text(
+            'Assets',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 10.0),
           _buildAssetCard('Bitcoin', '\$55,678.32', '+4.23%'),
           _buildAssetCard('Ethereum', '\$2,986.87', '+6.78%'),
           _buildAssetCard('Ripple', '\$1.34', '-2.10%'),
-          _buildAssetCard('Cardano', '\$1.23', '+8.92%'),
-          _buildAssetCard('Dogecoin', '\$0.34', '+12.45%'),
-          _buildAssetCard('Polkadot', '\$40.67', '-0.78%'),
-          _buildAssetCard('Litecoin', '\$235.89', '+3.56%'),
-          _buildAssetCard('Chainlink', '\$50.09', '-1.24%'),
-          _buildAssetCard('Stellar', '\$0.78', '+5.67%'),
-          _buildAssetCard('VeChain', '\$0.15', '-0.32%'),
-          // Add other cards here
+          // Add other asset cards here
         ],
       ),
     );
   }
 
-  
-
   Widget _buildAssetCard(String name, String price, String change) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10.0),
-      width: 150.0,
+      margin: EdgeInsets.only(top: 10.0),
+      padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         color: Colors.grey[900],
         borderRadius: BorderRadius.circular(10.0),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              name,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            SizedBox(height: 5.0),
-            Text(
-              price,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14.0,
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                price,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0,
+                ),
               ),
-            ),
-            SizedBox(height: 5.0),
-            Text(
-              change,
-              style: TextStyle(
-                color: change.startsWith('+') ? Colors.green : Colors.red,
-                fontSize: 12.0,
+              Text(
+                change,
+                style: TextStyle(
+                  color: change.startsWith('+') ? Colors.green : Colors.red,
+                  fontSize: 14.0,
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
     );
   }
 }
+
 
