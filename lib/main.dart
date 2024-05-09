@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import './screens/HomeScreen.dart'; 
 import './screens/JoinUsScreen.dart';
+import 'dart:developer';  //log, etc
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 void main() {
@@ -10,6 +12,22 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    
+    //check if the user already has a stored profile
+    AndroidOptions _getAndroidOptions() => const AndroidOptions(
+      encryptedSharedPreferences: true,
+    );
+    final storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
+
+    storage.read(key: 'user')
+      .then((user) => {
+        if(user == null) {
+          log('user is absent in storage')
+        } else {
+          log('found user $user')
+        } })
+      .catchError((e) => log('failed to get user: $e'));
+
     return MaterialApp(
       title: 'Your App Title',
       theme: ThemeData(
