@@ -53,7 +53,7 @@ class SignInSignUpScreen extends StatelessWidget {
               Container(
                 width: double.infinity, // Повне використання доступного простору в ширину
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius: BorderRadius.circular(20.0),
                   color: Colors.grey[900],
                 ),
                 child: TextField(
@@ -62,7 +62,7 @@ class SignInSignUpScreen extends StatelessWidget {
                     labelText: 'Email',
                     labelStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15.0),
+                      borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
                 ),
@@ -71,7 +71,7 @@ class SignInSignUpScreen extends StatelessWidget {
               Container(
                 width: double.infinity, // Повне використання доступного простору в ширину
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius: BorderRadius.circular(20.0),
                   color: Colors.grey[900],
                 ),
                 child: TextField(
@@ -81,7 +81,7 @@ class SignInSignUpScreen extends StatelessWidget {
                     labelText: 'Password',
                     labelStyle: TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15.0),
+                      borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
                 ),
@@ -95,12 +95,15 @@ class SignInSignUpScreen extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   minimumSize: Size(double.infinity, 50), // Розмір кнопки
                 ),
-                child: Text('Sign In'),
+                child: Text('Sign In',
+                style: TextStyle(color: Colors.white),
+                ),
               ),
               SizedBox(height: 10),
               ElevatedButton(
@@ -108,12 +111,15 @@ class SignInSignUpScreen extends StatelessWidget {
                   // Код для Google Sign In
                 },
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   minimumSize: Size(double.infinity, 50), // Розмір кнопки
                 ),
-                child: Text('Sign in with Google'),
+                child: Text('Sign in with Google',
+                style: TextStyle(color: Colors.white),
+                ),
               ),
               SizedBox(height: 10),
               ElevatedButton(
@@ -121,12 +127,15 @@ class SignInSignUpScreen extends StatelessWidget {
                   // Код для Sign In with Apple
                 },
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   minimumSize: Size(double.infinity, 50), // Розмір кнопки
                 ),
-                child: Text('Sign in with Apple'),
+                child: Text('Sign in with Apple',
+                style: TextStyle(color: Colors.white),
+                ),
               ),
               SizedBox(height: 10),
               TextButton(
