@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -95,11 +94,11 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-   Widget _buildFavoritesBlock() {
+    Widget _buildFavoritesBlock() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Favorites',
@@ -109,12 +108,66 @@ class HomeScreen extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          IconButton(
-            icon: Icon(Icons.arrow_forward_ios),
-            color: Colors.white,
-            onPressed: () {
-              // Navigate to favorites screen
-            },
+          SizedBox(height: 10.0),
+          Container(
+            height: 200.0, // Adjust height as needed
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 11, // Number of favorite cards
+              itemBuilder: (context, index) {
+                return _buildFavoriteCard('Asset $index', '\$${(index + 1) * 1000}', '+${index + 1}%', index.isEven ? true : false);
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFavoriteCard(String name, String price, String change, bool isPositive) {
+    return Container(
+      width: 150.0, // Width of each card
+      margin: EdgeInsets.only(right: 10.0),
+      padding: EdgeInsets.all(10.0),
+      decoration: BoxDecoration(
+        color: Colors.grey[900],
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            name,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 5.0),
+          Text(
+            change,
+            style: TextStyle(
+              color: isPositive ? Colors.green : Colors.red,
+              fontSize: 14.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: Icon(
+                Icons.show_chart,
+                size: 50.0,
+                color: isPositive ? Colors.green : Colors.red,
+              ),
+            ),
+          ),
+          Text(
+            price,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 14.0,
+            ),
           ),
         ],
       ),
@@ -195,4 +248,4 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-
+void main() => runApp(MaterialApp(home: HomeScreen()));
