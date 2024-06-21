@@ -6,18 +6,20 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     
     //check if the user already has a stored profile
-    AndroidOptions _getAndroidOptions() => const AndroidOptions(
+    AndroidOptions getAndroidOptions() => const AndroidOptions(
       encryptedSharedPreferences: true,
     );
-    final storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
+    final storage = FlutterSecureStorage(aOptions: getAndroidOptions());
 
     storage.read(key: 'user')
       .then((user) => {
@@ -33,19 +35,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SignInSignUpScreen(),
+      home: const SignInSignUpScreen(),
     );
   }
 }
 
 class SignInSignUpScreen extends StatelessWidget {
+  const SignInSignUpScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     backgroundColor: Color.fromRGBO(0, 0, 0, 1), 
+     backgroundColor: const Color.fromRGBO(0, 0, 0, 1), 
       body: Center(
         child: Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -58,16 +62,16 @@ class SignInSignUpScreen extends StatelessWidget {
                   color: Colors.blue, // Заглушка під логотип
                 ),
               ),
-              SizedBox(height: 10),
-              Text(
+              const SizedBox(height: 10),
+              const Text(
                 'Welcome',
                 style: TextStyle(fontSize: 36, color: Colors.white), // Більший розмір шрифту
               ),
-              Text(
+              const Text(
                 'Please sign in to continue',
                 style: TextStyle(fontSize: 12, color: Colors.white70),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Container(
                 width: double.infinity, // Повне використання доступного простору в ширину
                 decoration: BoxDecoration(
@@ -75,17 +79,17 @@ class SignInSignUpScreen extends StatelessWidget {
                   color: Colors.grey[900],
                 ),
                 child: TextField(
-                  style: TextStyle(color: Colors.white), // Білий текст
+                  style: const TextStyle(color: Colors.white), // Білий текст
                   decoration: InputDecoration(
                     labelText: 'Email',
-                    labelStyle: TextStyle(color: Colors.white),
+                    labelStyle: const TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Container(
                 width: double.infinity, // Повне використання доступного простору в ширину
                 decoration: BoxDecoration(
@@ -94,22 +98,22 @@ class SignInSignUpScreen extends StatelessWidget {
                 ),
                 child: TextField(
                   obscureText: true,
-                  style: TextStyle(color: Colors.white), // Білий текст
+                  style: const TextStyle(color: Colors.white), // Білий текст
                   decoration: InputDecoration(
                     labelText: 'Password',
-                    labelStyle: TextStyle(color: Colors.white),
+                    labelStyle: const TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
@@ -117,13 +121,13 @@ class SignInSignUpScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
-                  minimumSize: Size(double.infinity, 50), // Розмір кнопки
+                  minimumSize: const Size(double.infinity, 50), // Розмір кнопки
                 ),
-                child: Text('Sign In',
+                child: const Text('Sign In',
                 style: TextStyle(color: Colors.white),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
                   // Код для Google Sign In
@@ -133,13 +137,13 @@ class SignInSignUpScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
-                  minimumSize: Size(double.infinity, 50), // Розмір кнопки
+                  minimumSize: const Size(double.infinity, 50), // Розмір кнопки
                 ),
-                child: Text('Sign in with Google',
+                child: const Text('Sign in with Google',
                 style: TextStyle(color: Colors.white),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: () {
                   // Код для Sign In with Apple
@@ -149,18 +153,18 @@ class SignInSignUpScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
-                  minimumSize: Size(double.infinity, 50), // Розмір кнопки
+                  minimumSize: const Size(double.infinity, 50), // Розмір кнопки
                 ),
-                child: Text('Sign in with Apple',
+                child: const Text('Sign in with Apple',
                 style: TextStyle(color: Colors.white),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextButton(
                 onPressed: () {
                   // Код для відновлення пароля
                 },
-                child: Text(
+                child: const Text(
                   "Forgot password?",
                   style: TextStyle(
                     color: Colors.white,
@@ -169,7 +173,7 @@ class SignInSignUpScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.05), // Зсув на 5% вниз
-              Spacer(), // Простір для розташування тексту внизу
+              const Spacer(), // Простір для розташування тексту внизу
             ],
           ),
         ),
@@ -179,7 +183,7 @@ class SignInSignUpScreen extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               "Don't have an account? ",
               style: TextStyle(color: Colors.white),
             ),
@@ -187,10 +191,10 @@ class SignInSignUpScreen extends StatelessWidget {
               onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => JoinUsScreen()),
+                    MaterialPageRoute(builder: (context) => const JoinUsScreen()),
                   );
                 },
-              child: Text(
+              child: const Text(
                 "Sign Up",
                 style: TextStyle(
                   color: Colors.purple,

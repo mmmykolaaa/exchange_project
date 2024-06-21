@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,11 +12,11 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
              _buildHeader(),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             _buildActionsBlock(),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             _buildFavoritesBlock(),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             _buildAssetsBlock(),
           ],
         ),
@@ -24,15 +26,15 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildHeader() {
     return Container(
-      padding: EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(20.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             radius: 30.0,
             backgroundImage: AssetImage('assets/profile_picture.jpg'),
           ),
-          Text(
+          const Text(
             'Alex Butynets',
             style: TextStyle(
               color: Colors.white,
@@ -40,7 +42,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.info),
+            icon: const Icon(Icons.info),
             color: Colors.white,
             onPressed: () {
               // Info icon handler
@@ -53,8 +55,8 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildActionsBlock() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       decoration: BoxDecoration(
         color: Colors.grey[900],
         borderRadius: BorderRadius.circular(10.0),
@@ -82,10 +84,10 @@ class HomeScreen extends StatelessWidget {
           color: Colors.white,
           size: 30.0,
         ),
-        SizedBox(height: 5.0),
+        const SizedBox(height: 5.0),
         Text(
           action,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
@@ -96,11 +98,11 @@ class HomeScreen extends StatelessWidget {
 
     Widget _buildFavoritesBlock() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Favorites',
             style: TextStyle(
               color: Colors.white,
@@ -108,8 +110,8 @@ class HomeScreen extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 10.0),
-          Container(
+          const SizedBox(height: 10.0),
+          SizedBox(
             height: 200.0, // Adjust height as needed
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -127,10 +129,10 @@ class HomeScreen extends StatelessWidget {
   Widget _buildFavoriteCard(String name, String price, String change, bool isPositive) {
     return Container(
       width: 150.0, // Width of each card
-      margin: EdgeInsets.only(right: 10.0),
-      padding: EdgeInsets.all(10.0),
+      margin: const EdgeInsets.only(right: 10.0),
+      padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        color: Colors.grey[900],
+        color: Colors.grey[900]?.withOpacity(0.8),
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Column(
@@ -138,13 +140,13 @@ class HomeScreen extends StatelessWidget {
         children: [
           Text(
             name,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 5.0),
+          const SizedBox(height: 5.0),
           Text(
             change,
             style: TextStyle(
@@ -164,7 +166,7 @@ class HomeScreen extends StatelessWidget {
           ),
           Text(
             price,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 14.0,
             ),
@@ -176,12 +178,12 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildAssetsBlock() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 20.0),
-          Text(
+          const SizedBox(height: 20.0),
+          const Text(
             'Assets',
             style: TextStyle(
               color: Colors.white,
@@ -189,7 +191,7 @@ class HomeScreen extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 10.0),
+          const SizedBox(height: 10.0),
           _buildAssetCard('Bitcoin', '\$55,678.32', '+4.23%'),
           _buildAssetCard('Ethereum', '\$2,986.87', '+6.78%'),
           _buildAssetCard('Ripple', '\$1.34', '-2.10%'),
@@ -201,10 +203,10 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildAssetCard(String name, String price, String change) {
     return Container(
-      margin: EdgeInsets.only(top: 10.0),
-      padding: EdgeInsets.all(10.0),
+      margin: const EdgeInsets.only(top: 10.0),
+      padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        color: Colors.grey[900],
+        color: Colors.grey[900]?.withOpacity(0.8),
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Row(
@@ -215,7 +217,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               Text(
                 name,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
@@ -228,7 +230,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               Text(
                 price,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 16.0,
                 ),
@@ -248,4 +250,4 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-void main() => runApp(MaterialApp(home: HomeScreen()));
+void main() => runApp(const MaterialApp(home: HomeScreen()));
