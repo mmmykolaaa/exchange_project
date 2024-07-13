@@ -1,17 +1,37 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+  
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+
+    // Відтінки сірого
+  final Color gray1 = Color(0xFF181715);
+  final Color gray2 = Color(0xFF1C1B1B);
+  final Color gray3 = Color(0xFF31302E);
+  final Color gray4 = Color(0xFFCAC6C5);
+  final Color gray5 = Color(0xFFF0F0F0);
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: gray1,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildHeader(context), // передати context
+            _buildHeader(context),
             const SizedBox(height: 20.0),
             _buildActionsBlock(),
             const SizedBox(height: 20.0),
@@ -21,10 +41,35 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: gray2,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home, color: Colors.black),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search, color: Colors.black),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.swap_horiz, color: Colors.black),
+            label: 'Transactions',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history, color: Colors.black),
+            label: 'History',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.red,
+        onTap: _onItemTapped,
+      ),
     );
   }
 
-  Widget _buildHeader(BuildContext context) { // прийняти context як параметр
+  Widget _buildHeader(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20.0),
       child: Row(
@@ -74,7 +119,7 @@ class HomeScreen extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       decoration: BoxDecoration(
-        color: Colors.grey[900],
+        color: gray2,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Row(
@@ -128,10 +173,10 @@ class HomeScreen extends StatelessWidget {
           ),
           const SizedBox(height: 10.0),
           SizedBox(
-            height: 200.0, // Adjust height as needed
+            height: 200.0,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 11, // Number of favorite cards
+              itemCount: 11,
               itemBuilder: (context, index) {
                 return _buildFavoriteCard('Asset $index', '\$${(index + 1) * 1000}', '+${index + 1}%', index.isEven ? true : false);
               },
@@ -144,11 +189,11 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildFavoriteCard(String name, String price, String change, bool isPositive) {
     return Container(
-      width: 150.0, // Width of each card
+      width: 150.0,
       margin: const EdgeInsets.only(right: 10.0),
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        color: Colors.grey[900]?.withOpacity(0.8),
+        color: gray2,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Column(
@@ -180,7 +225,6 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-        
           Text(
             price,
             style: const TextStyle(
@@ -212,7 +256,6 @@ class HomeScreen extends StatelessWidget {
           _buildAssetCard('Bitcoin', '\$55,678.32', '+4.23%'),
           _buildAssetCard('Ethereum', '\$2,986.87', '+6.78%'),
           _buildAssetCard('Ripple', '\$1.34', '-2.10%'),
-          // Add other asset cards here
         ],
       ),
     );
@@ -223,7 +266,7 @@ class HomeScreen extends StatelessWidget {
       margin: const EdgeInsets.only(top: 10.0),
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        color: Colors.grey[900]?.withOpacity(0.8),
+        color: gray2,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Row(
@@ -233,7 +276,7 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                namu,
+                name,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 16.0,

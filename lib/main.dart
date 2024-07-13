@@ -13,6 +13,8 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
+
+  
   Widget build(BuildContext context) {
     
     //check if the user already has a stored profile
