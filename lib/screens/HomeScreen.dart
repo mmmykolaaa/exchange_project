@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-             _buildHeader(),
+            _buildHeader(context), // передати context
             const SizedBox(height: 20.0),
             _buildActionsBlock(),
             const SizedBox(height: 20.0),
@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) { // прийняти context як параметр
     return Container(
       padding: const EdgeInsets.all(20.0),
       child: Row(
@@ -45,7 +45,23 @@ class HomeScreen extends StatelessWidget {
             icon: const Icon(Icons.info),
             color: Colors.white,
             onPressed: () {
-              // Info icon handler
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Info'),
+                    content: const Text('Information about the app.'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  );
+                },
+              );
             },
           ),
         ],
@@ -96,7 +112,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-    Widget _buildFavoritesBlock() {
+  Widget _buildFavoritesBlock() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
@@ -164,6 +180,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
+        
           Text(
             price,
             style: const TextStyle(
@@ -216,7 +233,7 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                name,
+                namu,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 16.0,
