@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
-import './screens/HomeScreen.dart'; 
+import './screens/HomeScreen.dart';
 import './screens/JoinUsScreen.dart';
-import 'dart:developer';  //log, etc
+import 'dart:developer';  // log, etc
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+// Визначення кольорів
+final Color primaryColor = Color(0xFF5B4CF0);
+final Color backgroundColor = Color(0xFF1B1A1F);
+final Color cardBackgroundColor = Color(0xFF27262C);
+final Color textColor = Color(0xFFFFFFFF);
+final Color secondaryTextColor = Color(0xFFA1A1A6);
+final Color accentColor = Color(0xFF3DD598);
 
 void main() {
   runApp(const MyApp());
@@ -13,29 +20,78 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-
-  
   Widget build(BuildContext context) {
     
-    //check if the user already has a stored profile
+    // Перевірка, чи вже є збережений профіль користувача
     AndroidOptions getAndroidOptions() => const AndroidOptions(
       encryptedSharedPreferences: true,
     );
     final storage = FlutterSecureStorage(aOptions: getAndroidOptions());
 
     storage.read(key: 'user')
-      .then((user) => {
-        if(user == null) {
-          log('user is absent in storage')
+      .then((user) {
+        if (user == null) {
+          log('user is absent in storage');
         } else {
-          log('found user $user')
-        } })
+          log('found user $user');
+        }
+      })
       .catchError((e) => log('failed to get user: $e'));
 
     return MaterialApp(
-      title: 'Your App Title',
+      title: 'Exchanger',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: MaterialColor(primaryColor.value, {
+          50: primaryColor.withOpacity(0.1),
+          100: primaryColor.withOpacity(0.2),
+          200: primaryColor.withOpacity(0.3),
+          300: primaryColor.withOpacity(0.4),
+          400: primaryColor.withOpacity(0.5),
+          500: primaryColor.withOpacity(0.6),
+          600: primaryColor.withOpacity(0.7),
+          700: primaryColor.withOpacity(0.8),
+          800: primaryColor.withOpacity(0.9),
+          900: primaryColor.withOpacity(1.0),
+        }),
+        scaffoldBackgroundColor: backgroundColor,
+        cardColor: cardBackgroundColor,
+        textTheme: TextTheme(
+          displayLarge: TextStyle(color: textColor),
+          displayMedium: TextStyle(color: textColor),
+          displaySmall: TextStyle(color: textColor),
+          headlineLarge: TextStyle(color: textColor),
+          headlineMedium: TextStyle(color: textColor),
+          headlineSmall: TextStyle(color: textColor),
+          titleLarge: TextStyle(color: textColor),
+          titleMedium: TextStyle(color: textColor),
+          titleSmall: TextStyle(color: textColor),
+          bodyLarge: TextStyle(color: textColor),
+          bodyMedium: TextStyle(color: secondaryTextColor),
+          bodySmall: TextStyle(color: secondaryTextColor),
+          labelLarge: TextStyle(color: textColor),
+          labelMedium: TextStyle(color: textColor),
+          labelSmall: TextStyle(color: secondaryTextColor),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          labelStyle: TextStyle(color: textColor),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+            ),
+            minimumSize: const Size(double.infinity, 50), // Розмір кнопки
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: primaryColor,
+          ),
+        ),
       ),
       home: const SignInSignUpScreen(),
     );
@@ -48,7 +104,7 @@ class SignInSignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     backgroundColor: const Color.fromRGBO(0, 0, 0, 1), 
+      backgroundColor: backgroundColor,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -61,30 +117,29 @@ class SignInSignUpScreen extends StatelessWidget {
                 child: Container(
                   width: 100,
                   height: 100,
-                  color: Colors.blue, // Заглушка під логотип
+                  color: primaryColor, // Заглушка під логотип
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
+              Text(
                 'Welcome',
-                style: TextStyle(fontSize: 36, color: Colors.white), // Більший розмір шрифту
+                style: TextStyle(fontSize: 36, color: textColor), // Більший розмір шрифту
               ),
-              const Text(
+              Text(
                 'Please sign in to continue',
-                style: TextStyle(fontSize: 12, color: Colors.white70),
+                style: TextStyle(fontSize: 12, color: secondaryTextColor),
               ),
               const SizedBox(height: 20.0),
               Container(
                 width: double.infinity, // Повне використання доступного простору в ширину
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.0),
-                  color: Colors.grey[900],
+                  color: cardBackgroundColor,
                 ),
                 child: TextField(
-                  style: const TextStyle(color: Colors.white), // Білий текст
+                  style: TextStyle(color: textColor), // Білий текст
                   decoration: InputDecoration(
                     labelText: 'Email',
-                    labelStyle: const TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
@@ -96,14 +151,13 @@ class SignInSignUpScreen extends StatelessWidget {
                 width: double.infinity, // Повне використання доступного простору в ширину
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.0),
-                  color: Colors.grey[900],
+                  color: cardBackgroundColor,
                 ),
                 child: TextField(
                   obscureText: true,
-                  style: const TextStyle(color: Colors.white), // Білий текст
+                  style: TextStyle(color: textColor), // Білий текст
                   decoration: InputDecoration(
                     labelText: 'Password',
-                    labelStyle: const TextStyle(color: Colors.white),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
@@ -118,15 +172,8 @@ class SignInSignUpScreen extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => const HomeScreen()),
                   );
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  minimumSize: const Size(double.infinity, 50), // Розмір кнопки
-                ),
-                child: const Text('Sign In',
-                style: TextStyle(color: Colors.white),
+                child: Text('Sign In',
+                  style: TextStyle(color: textColor),
                 ),
               ),
               const SizedBox(height: 10),
@@ -134,15 +181,8 @@ class SignInSignUpScreen extends StatelessWidget {
                 onPressed: () {
                   // Код для Google Sign In
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  minimumSize: const Size(double.infinity, 50), // Розмір кнопки
-                ),
-                child: const Text('Sign in with Google',
-                style: TextStyle(color: Colors.white),
+                child: Text('Sign in with Google',
+                  style: TextStyle(color: textColor),
                 ),
               ),
               const SizedBox(height: 10),
@@ -150,15 +190,8 @@ class SignInSignUpScreen extends StatelessWidget {
                 onPressed: () {
                   // Код для Sign In with Apple
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  minimumSize: const Size(double.infinity, 50), // Розмір кнопки
-                ),
-                child: const Text('Sign in with Apple',
-                style: TextStyle(color: Colors.white),
+                child: Text('Sign in with Apple',
+                  style: TextStyle(color: textColor),
                 ),
               ),
               const SizedBox(height: 10),
@@ -166,10 +199,10 @@ class SignInSignUpScreen extends StatelessWidget {
                 onPressed: () {
                   // Код для відновлення пароля
                 },
-                child: const Text(
+                child: Text(
                   "Forgot password?",
                   style: TextStyle(
-                    color: Colors.white,
+                    color: textColor,
                     decoration: TextDecoration.underline,
                   ),
                 ),
@@ -185,21 +218,21 @@ class SignInSignUpScreen extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
+            Text(
               "Don't have an account? ",
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: textColor),
             ),
             TextButton(
               onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const JoinUsScreen()),
-                  );
-                },
-              child: const Text(
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const JoinUsScreen()),
+                );
+              },
+              child: Text(
                 "Sign Up",
                 style: TextStyle(
-                  color: Colors.purple,
+                  color: primaryColor,
                   decoration: TextDecoration.underline,
                 ),
               ),

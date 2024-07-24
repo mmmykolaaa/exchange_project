@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 
+// Відтінки кольорів
+final Color primaryColor = Color(0xFF5B4CF0);
+final Color backgroundColor = Color(0xFF1B1A1F);
+final Color cardBackgroundColor = Color(0xFF27262C);
+final Color textColor = Color(0xFFFFFFFF);
+final Color secondaryTextColor = Color(0xFFA1A1A6);
+final Color accentColor = Color(0xFF3DD598);
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
   
@@ -10,13 +18,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-    // Відтінки сірого
-  final Color gray1 = Color(0xFF181715);
-  final Color gray2 = Color(0xFF1C1B1B);
-  final Color gray3 = Color(0xFF31302E);
-  final Color gray4 = Color(0xFFCAC6C5);
-  final Color gray5 = Color(0xFFF0F0F0);
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -26,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: gray1,
+      backgroundColor: backgroundColor,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,30 +42,45 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: gray2,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: Colors.black),
-            label: 'Home',
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.all(10.0), // Відступи від країв
+        decoration: BoxDecoration(
+          color: backgroundColor, // Фон контейнера
+          borderRadius: BorderRadius.circular(15.0), // Округлення кутів
+          border: Border.all(
+            color: cardBackgroundColor, // Колір обводки
+            width: 1.0,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search, color: Colors.black),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.swap_horiz, color: Colors.black),
-            label: 'Transactions',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history, color: Colors.black),
-            label: 'History',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.red,
-        onTap: _onItemTapped,
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.transparent, // Прозорий фон навігаційного бару
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home, color: _selectedIndex == 0 ? accentColor : secondaryTextColor),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search, color: _selectedIndex == 1 ? accentColor : secondaryTextColor),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.swap_horiz, color: _selectedIndex == 2 ? accentColor : secondaryTextColor),
+              label: 'Transactions',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.history, color: _selectedIndex == 3 ? accentColor : secondaryTextColor),
+              label: 'History',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: accentColor,
+          unselectedItemColor: secondaryTextColor,
+          onTap: _onItemTapped,
+          type: BottomNavigationBarType.fixed, // Щоб елементи не мінялися на мобільних пристроях
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          elevation: 0, // Забираємо тінь
+        ),
       ),
     );
   }
@@ -79,29 +95,28 @@ class _HomeScreenState extends State<HomeScreen> {
             radius: 30.0,
             backgroundImage: AssetImage('assets/profile_picture.jpg'),
           ),
-          const Text(
+          Text(
             'Alex Butynets',
             style: TextStyle(
-              color: Colors.white,
+              color: textColor,
               fontSize: 20.0,
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.info),
-            color: Colors.white,
+            icon: Icon(Icons.info, color: textColor),
             onPressed: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: const Text('Info'),
-                    content: const Text('Information about the app.'),
+                    title: Text('Info'),
+                    content: Text('Information about the app.'),
                     actions: [
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: const Text('OK'),
+                        child: Text('OK'),
                       ),
                     ],
                   );
@@ -119,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
       margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       decoration: BoxDecoration(
-        color: gray2,
+        color: cardBackgroundColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Row(
@@ -142,14 +157,14 @@ class _HomeScreenState extends State<HomeScreen> {
               : action == 'Withdraw'
               ? Icons.arrow_circle_down
               : Icons.analytics,
-          color: Colors.white,
+          color: textColor,
           size: 30.0,
         ),
         const SizedBox(height: 5.0),
         Text(
           action,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: textColor,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -163,10 +178,10 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Favorites',
             style: TextStyle(
-              color: Colors.white,
+              color: textColor,
               fontSize: 20.0,
               fontWeight: FontWeight.bold,
             ),
@@ -193,7 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
       margin: const EdgeInsets.only(right: 10.0),
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        color: gray2,
+        color: cardBackgroundColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Column(
@@ -201,8 +216,8 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Text(
             name,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: textColor,
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
             ),
@@ -211,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(
             change,
             style: TextStyle(
-              color: isPositive ? Colors.green : Colors.red,
+              color: isPositive ? accentColor : Colors.red,
               fontSize: 14.0,
               fontWeight: FontWeight.bold,
             ),
@@ -221,14 +236,14 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Icon(
                 Icons.show_chart,
                 size: 50.0,
-                color: isPositive ? Colors.green : Colors.red,
+                color: isPositive ? accentColor : Colors.red,
               ),
             ),
           ),
           Text(
             price,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: textColor,
               fontSize: 14.0,
             ),
           ),
@@ -244,10 +259,10 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 20.0),
-          const Text(
+          Text(
             'Assets',
             style: TextStyle(
-              color: Colors.white,
+              color: textColor,
               fontSize: 20.0,
               fontWeight: FontWeight.bold,
             ),
@@ -266,7 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
       margin: const EdgeInsets.only(top: 10.0),
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        color: gray2,
+        color: cardBackgroundColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Row(
@@ -277,11 +292,11 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Text(
                 name,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: textColor,
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
-                ),
+                   ),
               ),
             ],
           ),
@@ -290,15 +305,15 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Text(
                 price,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: textColor,
                   fontSize: 16.0,
                 ),
               ),
               Text(
                 change,
                 style: TextStyle(
-                  color: change.startsWith('+') ? Colors.green : Colors.red,
+                  color: change.startsWith('+') ? accentColor : Colors.red,
                   fontSize: 14.0,
                 ),
               ),
@@ -310,4 +325,4 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-void main() => runApp(const MaterialApp(home: HomeScreen()));
+void main() => runApp(MaterialApp(home: HomeScreen()));
