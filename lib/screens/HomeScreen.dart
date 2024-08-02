@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'ProfileScreen.dart';
 
-// Відтінки кольорів
+// Color palette
 final Color primaryColor = Color(0xFF5B4CF0);
 final Color backgroundColor = Color(0xFF1B1A1F);
 final Color cardBackgroundColor = Color(0xFF27262C);
@@ -10,7 +11,7 @@ final Color accentColor = Color(0xFF3DD598);
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
-  
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -28,58 +29,60 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildHeader(context),
-            const SizedBox(height: 20.0),
-            _buildActionsBlock(),
-            const SizedBox(height: 20.0),
-            _buildFavoritesBlock(),
-            const SizedBox(height: 20.0),
-            _buildAssetsBlock(),
-          ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildHeader(context),
+              const SizedBox(height: 20.0),
+              _buildActionsBlock(),
+              const SizedBox(height: 20.0),
+              _buildFavoritesBlock(),
+              const SizedBox(height: 20.0),
+              _buildAssetsBlock(),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Container(
-        margin: const EdgeInsets.all(10.0), // Відступи від країв
+        margin: const EdgeInsets.all(10.0), // Margins
         decoration: BoxDecoration(
-          color: backgroundColor, // Фон контейнера
-          borderRadius: BorderRadius.circular(15.0), // Округлення кутів
+          color: backgroundColor, // Container background
+          borderRadius: BorderRadius.circular(15.0), // Rounded corners
           border: Border.all(
-            color: cardBackgroundColor, // Колір обводки
+            color: cardBackgroundColor, // Border color
             width: 1.0,
           ),
         ),
         child: BottomNavigationBar(
-          backgroundColor: Colors.transparent, // Прозорий фон навігаційного бару
+          backgroundColor: Colors.transparent, // Transparent background
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.home, color: _selectedIndex == 0 ? accentColor : secondaryTextColor),
+              icon: Icon(Icons.home, color: _selectedIndex == 0 ? primaryColor : secondaryTextColor),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search, color: _selectedIndex == 1 ? accentColor : secondaryTextColor),
+              icon: Icon(Icons.search, color: _selectedIndex == 1 ? primaryColor : secondaryTextColor),
               label: 'Search',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.swap_horiz, color: _selectedIndex == 2 ? accentColor : secondaryTextColor),
+              icon: Icon(Icons.swap_horiz, color: _selectedIndex == 2 ? primaryColor : secondaryTextColor),
               label: 'Transactions',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.history, color: _selectedIndex == 3 ? accentColor : secondaryTextColor),
+              icon: Icon(Icons.history, color: _selectedIndex == 3 ? primaryColor : secondaryTextColor),
               label: 'History',
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: accentColor,
+          selectedItemColor: primaryColor,
           unselectedItemColor: secondaryTextColor,
           onTap: _onItemTapped,
-          type: BottomNavigationBarType.fixed, // Щоб елементи не мінялися на мобільних пристроях
+          type: BottomNavigationBarType.fixed, // Fixed items
           showSelectedLabels: true,
           showUnselectedLabels: true,
-          elevation: 0, // Забираємо тінь
+          elevation: 0, // Remove shadow
         ),
       ),
     );
@@ -91,9 +94,17 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const CircleAvatar(
-            radius: 30.0,
-            backgroundImage: AssetImage('assets/profile_picture.jpg'),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen()),
+              );
+            },
+            child: const CircleAvatar(
+              radius: 30.0,
+              backgroundImage: AssetImage('assets/profile_picture.jpg'),
+            ),
           ),
           Text(
             'Alex Butynets',
@@ -110,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: Text('Info'),
-                    content: Text('Information about the app.'),
+                    content: Text('Made with love'),
                     actions: [
                       TextButton(
                         onPressed: () {
@@ -240,11 +251,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+          const SizedBox(height: 5.0),
           Text(
             price,
             style: TextStyle(
               color: textColor,
-              fontSize: 14.0,
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ],
@@ -258,7 +271,6 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 20.0),
           Text(
             'Assets',
             style: TextStyle(
@@ -268,17 +280,17 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           const SizedBox(height: 10.0),
-          _buildAssetCard('Bitcoin', '\$55,678.32', '+4.23%'),
-          _buildAssetCard('Ethereum', '\$2,986.87', '+6.78%'),
-          _buildAssetCard('Ripple', '\$1.34', '-2.10%'),
+          _buildAssetCard('Bitcoin', '\$40,000', '+5%', true),
+          _buildAssetCard('Ethereum', '\$3,000', '-2%', false),
+          _buildAssetCard('Ripple', '\$1.00', '+10%', true),
         ],
       ),
     );
   }
 
-  Widget _buildAssetCard(String name, String price, String change) {
+  Widget _buildAssetCard(String name, String price, String change, bool isPositive) {
     return Container(
-      margin: const EdgeInsets.only(top: 10.0),
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         color: cardBackgroundColor,
@@ -294,35 +306,31 @@ class _HomeScreenState extends State<HomeScreen> {
                 name,
                 style: TextStyle(
                   color: textColor,
-                  fontSize: 16.0,
+                  fontSize:                  16.0,
                   fontWeight: FontWeight.bold,
-                   ),
-              ),
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                price,
-                style: TextStyle(
-                  color: textColor,
-                  fontSize: 16.0,
                 ),
               ),
+              const SizedBox(height: 5.0),
               Text(
                 change,
                 style: TextStyle(
-                  color: change.startsWith('+') ? accentColor : Colors.red,
+                  color: isPositive ? accentColor : Colors.red,
                   fontSize: 14.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ],
+          ),
+          Text(
+            price,
+            style: TextStyle(
+              color: textColor,
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),
     );
   }
 }
-
-void main() => runApp(MaterialApp(home: HomeScreen()));
