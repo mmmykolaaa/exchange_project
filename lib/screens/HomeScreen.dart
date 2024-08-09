@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'ProfileScreen.dart';
+import 'SearchScreen.dart'; // Імпорт SearchScreen
 
-// Color palette
+// Колірна палітра
 final Color primaryColor = Color(0xFF5B4CF0);
 final Color backgroundColor = Color(0xFF1B1A1F);
 final Color cardBackgroundColor = Color(0xFF27262C);
@@ -23,6 +24,13 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _selectedIndex = index;
     });
+
+    if (_selectedIndex == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SearchScreen()), // Переходьте на SearchScreen
+      );
+    }
   }
 
   @override
@@ -46,17 +54,17 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: Container(
-        margin: const EdgeInsets.all(10.0), // Margins
+        margin: const EdgeInsets.all(10.0),
         decoration: BoxDecoration(
-          color: backgroundColor, // Container background
-          borderRadius: BorderRadius.circular(15.0), // Rounded corners
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(15.0),
           border: Border.all(
-            color: cardBackgroundColor, // Border color
+            color: cardBackgroundColor,
             width: 1.0,
           ),
         ),
         child: BottomNavigationBar(
-          backgroundColor: Colors.transparent, // Transparent background
+          backgroundColor: Colors.transparent,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home, color: _selectedIndex == 0 ? primaryColor : secondaryTextColor),
@@ -79,10 +87,10 @@ class _HomeScreenState extends State<HomeScreen> {
           selectedItemColor: primaryColor,
           unselectedItemColor: secondaryTextColor,
           onTap: _onItemTapped,
-          type: BottomNavigationBarType.fixed, // Fixed items
+          type: BottomNavigationBarType.fixed,
           showSelectedLabels: true,
           showUnselectedLabels: true,
-          elevation: 0, // Remove shadow
+          elevation: 0,
         ),
       ),
     );
@@ -92,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       padding: const EdgeInsets.all(20.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           GestureDetector(
             onTap: () {
@@ -106,34 +114,13 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundImage: AssetImage('assets/profile_picture.jpg'),
             ),
           ),
+          const SizedBox(width: 15.0),
           Text(
             'Alex Butynets',
             style: TextStyle(
               color: textColor,
               fontSize: 20.0,
             ),
-          ),
-          IconButton(
-            icon: Icon(Icons.info, color: textColor),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text('Info'),
-                    content: Text('Made with love'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text('OK'),
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
           ),
         ],
       ),
@@ -306,7 +293,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 name,
                 style: TextStyle(
                   color: textColor,
-                  fontSize:                  16.0,
+                  fontSize: 16.0,
                   fontWeight: FontWeight.bold,
                 ),
               ),
