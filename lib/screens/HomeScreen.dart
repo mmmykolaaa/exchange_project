@@ -19,39 +19,34 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
+  final PageController _pageController = PageController();
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-    });
-
-    if (_selectedIndex == 1) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => SearchScreen()), // Переходьте на SearchScreen
+      _pageController.animateToPage(
+        index,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
       );
-    }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildHeader(context),
-              const SizedBox(height: 20.0),
-              _buildActionsBlock(),
-              const SizedBox(height: 20.0),
-              _buildFavoritesBlock(),
-              const SizedBox(height: 20.0),
-              _buildAssetsBlock(),
-            ],
-          ),
-        ),
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        children: [
+          _buildMainContent(),
+          SearchScreen(), // Ваш існуючий SearchScreen
+        ],
       ),
       bottomNavigationBar: Container(
         margin: const EdgeInsets.all(10.0),
@@ -74,14 +69,6 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icon(Icons.search, color: _selectedIndex == 1 ? primaryColor : secondaryTextColor),
               label: 'Search',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.swap_horiz, color: _selectedIndex == 2 ? primaryColor : secondaryTextColor),
-              label: 'Transactions',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.history, color: _selectedIndex == 3 ? primaryColor : secondaryTextColor),
-              label: 'History',
-            ),
           ],
           currentIndex: _selectedIndex,
           selectedItemColor: primaryColor,
@@ -91,6 +78,25 @@ class _HomeScreenState extends State<HomeScreen> {
           showSelectedLabels: true,
           showUnselectedLabels: true,
           elevation: 0,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMainContent() {
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildHeader(context),
+            const SizedBox(height: 20.0),
+            _buildActionsBlock(),
+            const SizedBox(height: 20.0),
+            _buildFavoritesBlock(),
+            const SizedBox(height: 20.0),
+            _buildAssetsBlock(),
+          ],
         ),
       ),
     );

@@ -7,8 +7,36 @@ final Color textColor = Color(0xFFFFFFFF);
 final Color secondaryTextColor = Color(0xFFA1A1A6);
 final Color accentColor = Color(0xFF3DD598);
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
+
+  @override
+  _SearchScreenState createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  List<String> _categories = ['ETFs', 'Technology', 'Crypto', 'All categories'];
+  String _selectedCategory = 'All categories';
+
+  List<Map<String, String>> _recentSearches = [
+    {'symbol': 'FIZZ', 'name': 'National Beverage Corp.', 'image': 'assets/fizz_logo.png'},
+    {'symbol': 'ROG', 'name': 'Rogers Corp.', 'image': 'assets/rog_logo.png'},
+    {'symbol': 'MCD', 'name': 'McDonald`s Corp', 'image': 'assets/mcd_logo.png'},
+  ];
+
+  // Видалення елемента з недавніх пошуків
+  void _removeRecentSearch(int index) {
+    setState(() {
+      _recentSearches.removeAt(index);
+    });
+  }
+
+  // Оновлення обраної категорії
+  void _selectCategory(String category) {
+    setState(() {
+      _selectedCategory = category;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,26 +61,7 @@ class SearchScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context); // Закрити екран
-                },
-                child: Center(
-                  child: Text(
-                    'Cancel',
-                    style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 18.0,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ), 
         ),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
@@ -96,12 +105,12 @@ class SearchScreen extends StatelessWidget {
                     Wrap(
                       spacing: 10.0,
                       runSpacing: 10.0,
-                      children: [
-                        _buildCategoryChip('ETFs', Color(0xFF4A5448)),
-                        _buildCategoryChip('Technology', Color(0xFF364854)),
-                        _buildCategoryChip('Crypto', Color(0xFF5D3A58)),
-                        _buildCategoryChip('All categories', cardBackgroundColor),
-                      ],
+                      children: _categories.map((category) {
+                        return GestureDetector(
+                          onTap: () => _selectCategory(category),
+                          child: _buildCategoryChip(category, _selectedCategory == category),
+                        );
+                      }).toList(),
                     ),
                     const SizedBox(height: 30.0),
                     Text(
@@ -113,9 +122,27 @@ class SearchScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10.0),
-                    _buildRecentSearchItem('FIZZ', 'National Beverage Corp.', 'assets/fizz_logo.png'),
-                    _buildRecentSearchItem('ROG', 'Rogers Corp.', 'assets/rog_logo.png'),
-                    _buildRecentSearchItem('MCD', 'McDonald`s Corp', 'assets/mcd_logo.png'),
+                    Column(
+                      children: _recentSearches.asMap().entries.map((entry) {
+                        int index = entry.key;
+                        Map<String, String> searchItem = entry.value;
+                        return Dismissible(
+                          key: UniqueKey(),
+                          direction: DismissDirection.endToStart,
+                          onDismissed: (direction) {
+                            _removeRecentSearch(index); // Видалення елемента
+                          },
+                          background: Container(
+                            padding: const EdgeInsets.only(right: 20.0),
+                            alignment: Alignment.centerRight,
+                            color: Colors.red,
+                            child: Icon(Icons.delete, color: Colors.white),
+                          ),
+                          child: _buildRecentSearchItem(
+                              searchItem['symbol']!, searchItem['name']!, searchItem['image']!),
+                        );
+                      }).toList(),
+                    ),
                   ],
                 ),
               ),
@@ -126,17 +153,17 @@ class SearchScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCategoryChip(String label, Color color) {
+  Widget _buildCategoryChip(String label, bool isSelected) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
       decoration: BoxDecoration(
-        color: color,
+        color: isSelected ? primaryColor : cardBackgroundColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Text(
         label,
         style: TextStyle(
-          color: textColor,
+          color: isSelected ? backgroundColor : textColor,
           fontSize: 16.0,
           fontWeight: FontWeight.bold,
         ),
@@ -178,7 +205,7 @@ class SearchScreen extends StatelessWidget {
           Spacer(),
           GestureDetector(
             onTap: () {
-              // Дія для видалення цього елемента з нещодавніх пошуків
+              // Можна додати додаткові дії при натисканні, якщо потрібно
             },
             child: Icon(Icons.close, color: secondaryTextColor),
           ),

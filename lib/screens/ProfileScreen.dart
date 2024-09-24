@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 final Color primaryColor = Color(0xFF5B4CF0);
 final Color backgroundColor = Color(0xFF1B1A1F);
@@ -7,7 +9,56 @@ final Color textColor = Color(0xFFFFFFFF);
 final Color secondaryTextColor = Color(0xFFA1A1A6);
 final Color accentColor = Color(0xFF3DD598);
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  File? _imageFile; // To store the selected image
+
+  // Function to show a modal bottom sheet for selecting image source
+  void _showImageSourceActionSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return SafeArea(
+          child: Wrap(
+            children: [
+              ListTile(
+                leading: Icon(Icons.camera_alt, color: primaryColor),
+                title: Text('Camera', style: TextStyle(color: textColor)),
+                onTap: () {
+                  _pickImage(ImageSource.camera); // Pick from camera
+                  Navigator.of(context).pop();
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.photo_library, color: primaryColor),
+                title: Text('Gallery', style: TextStyle(color: textColor)),
+                onTap: () {
+                  _pickImage(ImageSource.gallery); // Pick from gallery
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // Function to pick an image using the image picker
+  Future<void> _pickImage(ImageSource source) async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: source);
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path); // Store the selected image
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,9 +79,17 @@ class ProfileScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: CircleAvatar(
-                radius: 50.0,
-                backgroundImage: AssetImage('assets/profile_picture.jpg'),
+              child: GestureDetector(
+                onTap: () => _showImageSourceActionSheet(context),
+                child: CircleAvatar(
+                  radius: 50.0,
+                  backgroundImage: _imageFile != null
+                      ? FileImage(_imageFile!)
+                      : AssetImage('assets/profile_picture.jpg') as ImageProvider,
+                  child: _imageFile == null
+                      ? Icon(Icons.add_a_photo, size: 30.0, color: textColor)
+                      : null, // Show add photo icon if no image is selected
+                ),
               ),
             ),
             const SizedBox(height: 20.0),
@@ -73,7 +132,7 @@ class ProfileScreen extends StatelessWidget {
               style: TextStyle(color: textColor),
             ),
             const SizedBox(height: 20.0),
-            // Вкладка для інформації
+            // Info Card
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
@@ -86,7 +145,7 @@ class ProfileScreen extends StatelessWidget {
                   const SizedBox(width: 10.0),
                   Expanded(
                     child: Text(
-                      'Desinged and Created by Mykola Kavetskyi',
+                      'Designed and Created by Mykola Kavetskyi',
                       style: TextStyle(color: textColor),
                     ),
                   ),
